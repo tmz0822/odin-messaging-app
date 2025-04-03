@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const { generateToken } = require('../utils/jwt');
 
 async function signup(req, res) {
   const { username, password } = req.body;
@@ -34,10 +35,29 @@ async function signup(req, res) {
   }
 }
 
-function login(req, res) {
+async function login(req, res) {
   const { username, password } = req.body;
 
   try {
+    const user = await User.findUserByUsername(username);
+
+    if (!user) {
+      return res
+        .status(401)
+        .json({ success: false, message: 'Invalid username or password' });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return res
+        .status(401)
+        .json({ success: false, message: 'Invalid username or password' });
+    }
+
+    const token = generateToken(user);
+
+    res.json({ success: true, message: 'Login successful', token });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Internal server error' });
   }

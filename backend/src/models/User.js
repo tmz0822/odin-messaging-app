@@ -1,5 +1,20 @@
 const prisma = require('../config/prisma');
 
+const findUserById = async (id) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    return user;
+  } catch (error) {
+    console.error('Error finding user by ID:', error);
+    throw new Error('Database query failed');
+  }
+};
+
 const findUserByUsername = async (username) => {
   try {
     const user = await prisma.user.findUnique({
@@ -31,4 +46,4 @@ const createUser = async (username, password) => {
   }
 };
 
-module.exports = { findUserByUsername, createUser };
+module.exports = { findUserById, findUserByUsername, createUser };

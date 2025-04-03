@@ -4,10 +4,10 @@ const authRouter = Router();
 
 const authController = require('../controllers/authController');
 
-const validate = require('../middlewares/validateAuth');
-const { signupSchema } = require('../validations/authValidation');
+const { validate } = require('../middlewares/authMiddleware');
+const { signupSchema, loginSchema } = require('../validations/authValidation');
 
 authRouter.post('/signup', validate(signupSchema), authController.signup);
-authRouter.post('/login', authController.login);
+authRouter.post('/login', validate(loginSchema), authController.login);
 
 module.exports = authRouter;
