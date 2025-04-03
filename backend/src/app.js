@@ -9,7 +9,12 @@ const authRouter = require('./routes/authRouter');
 const passport = require('./config/passport');
 
 // Middlewares
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -18,8 +23,6 @@ app.use(passport.initialize());
 
 // Routers
 app.use('/auth', authRouter);
-
-const authenticate = passport.authenticate('jwt', { session: false });
 
 app.get(
   '/protected',

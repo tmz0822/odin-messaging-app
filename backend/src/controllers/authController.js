@@ -57,10 +57,27 @@ async function login(req, res) {
 
     const token = generateToken(user);
 
-    res.json({ success: true, message: 'Login successful', token });
+    // Store token in an HttpOnly cookie
+    res.cookie('jwt', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
+    });
+
+    res.json({ success: true, message: 'Login successful' });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
 }
 
-module.exports = { signup, login };
+const logout = (req, res) => {
+  res.clearCookie('jwt', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+  });
+  res.json({ success: true, message: 'Logout successful' });
+};
+
+module.exports = { signup, login, logout };
