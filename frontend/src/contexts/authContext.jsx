@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 import { authService } from '../services/authService';
+import { userService } from '../services/userService';
 
 const AuthContext = createContext();
 
@@ -8,14 +9,25 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const checkAuth = async () => {};
-    console.log('checking auth');
+    const checkAuth = async () => {
+      try {
+        const userData = await userService.getUser();
+        console.log(userData);
+        setUser(userData);
+        setIsAuthenticated(true);
+      } catch (error) {
+        setUser(null);
+        setIsAuthenticated(false);
+      }
+    };
+    console.log('Checking authentication...');
     checkAuth();
   }, []);
 
   const login = async (credentials) => {
     await authService.login(credentials);
-    setUser(); // grab user from userService?
+    const userData = await userService.getUser();
+    setUser(userData); // grab user from userService?
     setIsAuthenticated(true);
   };
 

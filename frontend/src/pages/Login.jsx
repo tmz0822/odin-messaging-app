@@ -12,8 +12,6 @@ const Login = () => {
   const [error, setError] = useState('');
   const { login } = useContext(AuthContext);
 
-  console.log(login);
-
   const onSubmit = async (data) => {
     try {
       await login(data);
