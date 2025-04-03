@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { signup } from '../services/authService';
+import { authService } from '../services/authService';
 
 const Signup = () => {
   const {
@@ -12,7 +12,7 @@ const Signup = () => {
 
   const onSubmit = async (data) => {
     try {
-      await signup(data);
+      await authService.signup(data);
       setError('');
     } catch (error) {
       setError(error.message);
