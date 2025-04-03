@@ -1,10 +1,12 @@
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 require('dotenv').config();
 
 const app = express();
 const authRouter = require('./routes/authRouter');
+const userRouter = require('./routes/userRouter');
 
 const passport = require('./config/passport');
 
@@ -17,12 +19,14 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Passport
-app.use(passport.initialize());
+// app.use(passport.initialize());
 
 // Routers
 app.use('/auth', authRouter);
+app.use('/users', userRouter);
 
 app.get(
   '/protected',
