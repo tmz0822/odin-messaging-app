@@ -3,14 +3,11 @@ import { AuthContext } from '../contexts/authContext';
 import { messagesService } from '../services/messagesService';
 
 import '../styles/MessageContainer.css';
+import MessageItem from './MessageItem';
 
 const MessageContainer = ({ messages, handleSendMessage }) => {
   const { user } = useContext(AuthContext);
   const [message, setMessage] = useState('');
-
-  if (!messages) {
-    return <div>Loading messages...</div>;
-  }
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -21,15 +18,16 @@ const MessageContainer = ({ messages, handleSendMessage }) => {
     setMessage('');
   };
 
+  if (!messages) {
+    return <div>Loading messages...</div>;
+  }
+
   return (
     <div className="message">
       <h2>Messages</h2>
-      <ul>
+      <ul className="message-list">
         {messages.map((message) => (
-          <li key={message.id}>
-            <strong>{message.senderId === user.id ? 'You' : 'Other'}:</strong>
-            {message.content}
-          </li>
+          <MessageItem key={message.id} message={message} />
         ))}
       </ul>
 

@@ -1,3 +1,23 @@
+.message {
+  flex: 1;
+  padding: 1rem 2rem;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.message h2 {
+  margin-bottom: 1rem;
+}
+
+.message-list {
+  flex: 1;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column-reverse;
+}
+
 .message-input {
   display: flex;
   gap: 0.5rem;

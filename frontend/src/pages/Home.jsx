@@ -7,7 +7,8 @@ import UserList from '../components/UserList';
 const Home = () => {
   const { user } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
-  const [receiverId, setReceiverId] = useState(null);
+
+  const [receiverId, setReceiverId] = useState(null); // To determine who are we chatting to
 
   const handleFetchMessages = async (userId) => {
     try {
@@ -25,9 +26,13 @@ const Home = () => {
 
     const tempMessage = {
       id: Date.now(),
+      sender: {
+        avatar: user.avatar,
+      },
+      content: message,
       senderId: user.id,
       receiverId,
-      content: message,
+
       createdAt: new Date().toISOString(),
     };
 
@@ -40,11 +45,10 @@ const Home = () => {
         message
       );
 
-      setMessages((prevMessages) =>
-        prevMessages
-          .filter((msg) => msg.id !== tempMessage.id)
-          .concat(sentMessage)
-      );
+      setMessages((prevMessages) => [
+        sentMessage,
+        ...prevMessages.filter((msg) => msg.id !== tempMessage.id),
+      ]);
     } catch (error) {
       console.error('Error sending message:', error);
       // Remove the temporary message if send fails
