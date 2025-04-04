@@ -43,6 +43,7 @@ const findAllUsers = async () => {
   try {
     const users = await prisma.user.findMany({
       select: {
+        id: true,
         username: true,
         avatar: true,
       },
@@ -71,9 +72,30 @@ const createUser = async (username, password) => {
   }
 };
 
+const updateAvatar = async (userId, avatarPath) => {
+  try {
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: {
+        avatar: avatarPath,
+      },
+      omit: {
+        password: true,
+        role: true,
+      },
+    });
+
+    return updatedUser;
+  } catch (error) {
+    console.error('Error updating avatar: ', error);
+    throw new Error('Database query failed');
+  }
+};
+
 module.exports = {
   findUserById,
   findUserByUsername,
   findAllUsers,
   createUser,
+  updateAvatar,
 };

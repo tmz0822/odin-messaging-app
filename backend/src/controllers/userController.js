@@ -1,4 +1,7 @@
 const User = require('../models/User');
+const path = require('node:path');
+const fs = require('fs');
+const multer = require('multer');
 
 const getUser = async (req, res) => {
   if (!req.user) {
@@ -38,7 +41,44 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage });
+
+const uploadAvatar = [
+  upload.single('avatar'),
+  async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const avatarPath = `/uploads/${req.file.filename}`;
+
+      const updatedUser = await User.updateAvatar(userId, avatarPath);
+
+      if (!updatedUser) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      res.status(200).json({
+        message: 'Avatar uploaded successfully',
+        avatar: avatarPath,
+        user: updatedUser,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to upload avatar' });
+    }
+  },
+];
+
 module.exports = {
   getUser,
   getAllUsers,
+  uploadAvatar,
 };

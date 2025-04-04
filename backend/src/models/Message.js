@@ -10,6 +10,14 @@ const addMessage = async (message) => {
         sender: { connect: { id: senderId } },
         receiver: { connect: { id: receiverId } },
       },
+      include: {
+        sender: {
+          select: {
+            avatar: true,
+            username: true,
+          },
+        },
+      },
     });
 
     return newMessage;
@@ -28,8 +36,22 @@ const getMessages = async (userId, receiverId) => {
           { senderId: receiverId, receiverId: userId },
         ],
       },
+      include: {
+        sender: {
+          select: {
+            avatar: true,
+            username: true,
+          },
+        },
+        receiver: {
+          select: {
+            avatar: true,
+            username: true,
+          },
+        },
+      },
       orderBy: {
-        createdAt: 'asc',
+        createdAt: 'desc', // returns descending because the frontend is using a flex-direction: column-reverse trick
       },
     });
 

@@ -22,8 +22,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// avatar uploads
+app.use('/uploads', express.static('uploads'));
+
 // Passport
-// app.use(passport.initialize());
+app.use(passport.initialize());
 
 // Routers
 app.use('/auth', authRouter);
