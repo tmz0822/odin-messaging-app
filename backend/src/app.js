@@ -7,6 +7,7 @@ require('dotenv').config();
 const app = express();
 const authRouter = require('./routes/authRouter');
 const userRouter = require('./routes/userRouter');
+const messagesRouter = require('./routes/messagesRouter');
 
 const passport = require('./config/passport');
 
@@ -27,6 +28,7 @@ app.use(cookieParser());
 // Routers
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
+app.use('/messages', messagesRouter);
 
 app.get(
   '/protected',
