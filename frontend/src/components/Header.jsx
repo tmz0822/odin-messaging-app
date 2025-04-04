@@ -17,13 +17,13 @@ const Header = () => {
 
       <div className="header-right">
         <Link to={`/${user.username}`}>
-          <div className="user-profile">
+          <div className="header-right__user-profile">
             <img
               src={`${API_URL}${user.avatar}`}
               alt="User Avatar"
-              className="user-avatar"
+              className="header-right__user-avatar"
             />
-            <span className="user-name">{user.username}</span>
+            <span className="header-right__user-name">{user.username}</span>
           </div>
         </Link>
       </div>

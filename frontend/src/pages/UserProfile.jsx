@@ -12,6 +12,25 @@ const UserProfile = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploading, setUploading] = useState(false);
 
+  const [formData, setFormData] = useState({
+    bio: user.bio || '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const resetFormData = () => {
+    setFormData({
+      bio: user.bio || '',
+    });
+  };
+
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
   };
@@ -38,9 +57,16 @@ const UserProfile = () => {
     }
   };
 
-  const onSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  console.log(user);
+    try {
+      // Update profile
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
+  };
+
   return (
     <div className="user-profile">
       <h1>Your profile</h1>
@@ -56,7 +82,7 @@ const UserProfile = () => {
         </button>
       </div>
 
-      <div className="user-profile__details">
+      <form className="user-profile__details" onSubmit={handleSubmit}>
         <div className="user-profile__field">
           <label htmlFor="username">Username</label>
           <input id="username" value={user.username} readOnly />
@@ -64,9 +90,19 @@ const UserProfile = () => {
 
         <div className="user-profile__field">
           <label htmlFor="bio">Bio</label>
-          <input id="bio" value={user.bio} />
+          <input
+            id="bio"
+            name="bio"
+            value={formData.bio}
+            onChange={handleChange}
+          />
         </div>
-      </div>
+
+        <button type="reset" onClick={resetFormData}>
+          Reset
+        </button>
+        <button type="submit">Save changes</button>
+      </form>
     </div>
   );
 };

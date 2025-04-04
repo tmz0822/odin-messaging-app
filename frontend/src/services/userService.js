@@ -53,6 +53,8 @@ const uploadAvatar = async (file) => {
   return data;
 };
 
+const updateProfile = async (profileData) => {};
+
 export const userService = {
   fetchUser,
   fetchUsers,
