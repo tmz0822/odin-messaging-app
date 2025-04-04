@@ -4,6 +4,7 @@ import Login from '../pages/Login';
 import Home from '../pages/Home';
 import App from '../App';
 import ProtectedRoute from './ProtectedRoute';
+import UserProfile from '../pages/UserProfile';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: ':username',
+        element: <UserProfile />,
       },
     ],
   },

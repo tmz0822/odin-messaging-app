@@ -1,21 +1,31 @@
 import { useContext } from 'react';
 import '../styles/Header.css';
 import { AuthContext } from '../contexts/authContext';
+import { Link } from 'react-router';
+import { API_URL } from '../config/api';
 
 const Header = () => {
   const { user } = useContext(AuthContext);
 
   return (
     <header className="header">
-      <div className="header-left">
-        <h1>Messager</h1>
-      </div>
+      <Link to="/">
+        <div className="header-left">
+          <h1>Messager</h1>
+        </div>
+      </Link>
 
       <div className="header-right">
-        <div className="user-profile">
-          <img src="" alt="User Avatar" className="user-avatar" />
-          <span className="user-name">{user.username}</span>
-        </div>
+        <Link to={`/${user.username}`}>
+          <div className="user-profile">
+            <img
+              src={`${API_URL}${user.avatar}`}
+              alt="User Avatar"
+              className="user-avatar"
+            />
+            <span className="user-name">{user.username}</span>
+          </div>
+        </Link>
       </div>
     </header>
   );

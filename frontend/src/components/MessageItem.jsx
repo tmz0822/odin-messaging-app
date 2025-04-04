@@ -1,14 +1,13 @@
+import { API_URL } from '../config/api';
 import '../styles/MessageItem.css';
 import { format } from 'date-fns';
 
 const MessageItem = ({ message }) => {
-  console.log(message.sender.avatar);
-
   return (
     <li className="message-item">
       <div className="message-item__avatar">
         <img
-          src={message.sender?.avatar}
+          src={`${API_URL}${message.sender.avatar}`}
           alt={`${message.sender.username}'s avatar`}
         />
       </div>

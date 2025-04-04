@@ -5,6 +5,7 @@
   background-color: #007bff;
   color: white;
   padding: 1rem 2rem;
+  max-height: 70px;
 }
 
 .header-left h1 {
@@ -17,20 +18,21 @@
   align-items: center;
 }
 
-.user-profile {
+.header-right .user-profile {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  padding: 0.5rem 1rem;
 }
 
-.user-avatar {
+.header-right .user-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   border: 2px solid white;
 }
 
-.user-name {
+.header-right .user-name {
   font-size: 1rem;
   font-weight: bold;
 }
