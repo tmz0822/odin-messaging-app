@@ -53,10 +53,29 @@ const uploadAvatar = async (file) => {
   return data;
 };
 
-const updateProfile = async (profileData) => {};
+const updateProfile = async (profileData) => {
+  const response = await fetch(`${API_URL}/users/profile`, {
+    method: 'PUT',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(profileData),
+  });
+
+  const data = await response.json();
+  console.log(data);
+
+  if (!response.ok) {
+    throw new Error(data.message || 'Failed to update user profile');
+  }
+
+  return data.user;
+};
 
 export const userService = {
   fetchUser,
   fetchUsers,
   uploadAvatar,
+  updateProfile,
 };

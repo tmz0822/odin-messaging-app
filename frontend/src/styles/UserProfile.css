@@ -78,3 +78,41 @@
 .user-profile__field input:read-only:focus {
   outline: none;
 }
+
+.user-profile__buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.user-profile__buttons button {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.user-profile__buttons button[type='reset'] {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.user-profile__buttons button[type='reset']:hover {
+  background-color: #f5c6cb;
+}
+
+.user-profile__buttons button[type='submit'] {
+  background-color: #28a745;
+  color: white;
+}
+
+.user-profile__buttons button[type='submit']:hover {
+  background-color: #218838;
+}
+
+.user-profile__buttons button:disabled,
+.user-profile__buttons button:disabled:hover {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}

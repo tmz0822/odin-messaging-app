@@ -16,6 +16,13 @@ const UserProfile = () => {
     bio: user.bio || '',
   });
 
+  // add more fields when there are more editable fields.
+  const isFormUnchanged =
+    JSON.stringify(formData) ===
+    JSON.stringify({
+      bio: user.bio || '',
+    });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -57,11 +64,17 @@ const UserProfile = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Update profile
+      const updatedUser = await userService.updateProfile(formData);
+
+      // Merge previous user states with the updated user states
+      setUser((prevUser) => ({
+        ...prevUser,
+        ...updatedUser,
+      }));
     } catch (error) {
       console.error('Error updating profile:', error);
     }
@@ -98,10 +111,18 @@ const UserProfile = () => {
           />
         </div>
 
-        <button type="reset" onClick={resetFormData}>
-          Reset
-        </button>
-        <button type="submit">Save changes</button>
+        <div className="user-profile__buttons">
+          <button
+            type="reset"
+            onClick={resetFormData}
+            disabled={isFormUnchanged}
+          >
+            Reset
+          </button>
+          <button type="submit" disabled={isFormUnchanged}>
+            Save changes
+          </button>
+        </div>
       </form>
     </div>
   );
