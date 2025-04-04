@@ -7,17 +7,20 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const userData = await userService.getUser();
-        console.log(userData);
-        setUser(userData);
+        const data = await userService.fetchUser();
+        console.log(data.user);
+        setUser(data.user);
         setIsAuthenticated(true);
       } catch (error) {
         setUser(null);
         setIsAuthenticated(false);
+      } finally {
+        setLoading(false);
       }
     };
     console.log('Checking authentication...');
@@ -26,8 +29,8 @@ const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     await authService.login(credentials);
-    const userData = await userService.getUser();
-    setUser(userData); // grab user from userService?
+    const userData = await userService.fetchUser();
+    setUser(userData);
     setIsAuthenticated(true);
   };
 
@@ -38,7 +41,9 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, user, loading, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
