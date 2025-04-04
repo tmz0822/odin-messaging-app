@@ -6,7 +6,7 @@ import { AuthContext } from './contexts/authContext';
 
 function App() {
   return (
-    <div>
+    <div className="app-container">
       <Header />
       <main className="main-container">
         <Outlet />
