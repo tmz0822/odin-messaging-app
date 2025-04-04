@@ -92,10 +92,25 @@ const updateAvatar = async (userId, avatarPath) => {
   }
 };
 
+const updateUser = async (userId, updates) => {
+  try {
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: updates,
+    });
+
+    return updatedUser;
+  } catch (error) {
+    console.error('Error updating user: ', error);
+    throw new Error('Failed to update user');
+  }
+};
+
 module.exports = {
   findUserById,
   findUserByUsername,
   findAllUsers,
   createUser,
   updateAvatar,
+  updateUser,
 };

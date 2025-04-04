@@ -9,6 +9,9 @@ userRouter.use(authenticate);
 
 userRouter.get('/me', userController.getUser);
 userRouter.get('/', userController.getAllUsers);
+
 userRouter.post('/avatar', userController.uploadAvatar);
+
+userRouter.put('/profile', userController.updateProfile);
 
 module.exports = userRouter;

@@ -41,6 +41,38 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const updateProfile = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const allowedFields = ['bio'];
+
+    const updates = Object.fromEntries(
+      Object.entries(req.body).filter(([key]) => allowedFields.includes(key))
+    );
+
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ message: 'No valid fields to update' });
+    }
+
+    const updatedUser = await User.updateUser(userId, updates);
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Profile updated successfully',
+      user: updatedUser,
+    });
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    res
+      .status(500)
+      .json({ success: false, message: 'Failed to update profile' });
+  }
+};
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/');
@@ -81,4 +113,5 @@ module.exports = {
   getUser,
   getAllUsers,
   uploadAvatar,
+  updateProfile,
 };
