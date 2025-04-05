@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "start:frontend": "cd frontend && npm run dev",
+    "start:backend": "cd backend && concurrently \"nodemon src/app.js\" \"npx prisma studio\"",
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
+

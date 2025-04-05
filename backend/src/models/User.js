@@ -1,15 +1,17 @@
 const prisma = require('../config/prisma');
 
+const userOmitFields = {
+  password: true,
+  role: true,
+};
+
 const findUserById = async (id) => {
   try {
     const user = await prisma.user.findUnique({
       where: {
         id: id,
       },
-      omit: {
-        password: true,
-        role: true,
-      },
+      omit: userOmitFields,
     });
 
     return user;
@@ -79,10 +81,7 @@ const updateAvatar = async (userId, avatarPath) => {
       data: {
         avatar: avatarPath,
       },
-      omit: {
-        password: true,
-        role: true,
-      },
+      omit: userOmitFields,
     });
 
     return updatedUser;
@@ -97,6 +96,7 @@ const updateUser = async (userId, updates) => {
     const updatedUser = await prisma.user.update({
       where: { id: userId },
       data: updates,
+      omit: userOmitFields,
     });
 
     return updatedUser;

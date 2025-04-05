@@ -3,6 +3,7 @@ import { userService } from '../services/userService';
 
 import '../styles/UserList.css';
 import { AuthContext } from '../contexts/authContext';
+import { API_URL } from '../config/api';
 
 const UserList = ({ onSelectUser }) => {
   const { user: currentUser } = useContext(AuthContext);
@@ -14,7 +15,7 @@ const UserList = ({ onSelectUser }) => {
     const loadUsers = async () => {
       try {
         const fetchedUsers = await userService.fetchUsers();
-        console.log(fetchedUsers);
+
         setUsers(fetchedUsers);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -29,7 +30,6 @@ const UserList = ({ onSelectUser }) => {
     return <div>Loading users...</div>;
   }
 
-  console.log(users);
   const handleUserClick = (userId) => {
     setSelectedUserId(userId);
     onSelectUser(userId);
@@ -50,7 +50,7 @@ const UserList = ({ onSelectUser }) => {
                 onClick={() => handleUserClick(user.id)}
               >
                 <img
-                  src={user.avatar}
+                  src={`${API_URL}${user.avatar}`}
                   alt={`${user.username}'s avatar`}
                   className="user-list__avatar"
                 />

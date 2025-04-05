@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { authService } from '../services/authService';
+import { Link, useNavigate } from 'react-router';
+
+import '../styles/Signup.css';
 
 const Signup = () => {
   const {
@@ -9,10 +12,14 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
-      await authService.signup(data);
+      const response = await authService.signup(data);
+      if (response.success) {
+        navigate('/login');
+      }
       setError('');
     } catch (error) {
       setError(error.message);
@@ -21,9 +28,10 @@ const Signup = () => {
 
   return (
     <div className="signup-container">
-      {error && <p className="error-message">{error}</p>}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+      <h1 className="signup-title">Sign Up</h1>
+
+      <form className="signup-form" onSubmit={handleSubmit(onSubmit)}>
+        <div className="signup-field">
           <label htmlFor="username">Username</label>
           <input
             id="username"
@@ -35,10 +43,12 @@ const Signup = () => {
               },
             })}
           />
-          {errors.username && <p>{errors.username.message}</p>}
+          {errors.username && (
+            <p className="error-message">{errors.username.message}</p>
+          )}
         </div>
 
-        <div>
+        <div className="signup-field">
           <label htmlFor="password">Password</label>
           <input
             id="password"
@@ -51,10 +61,19 @@ const Signup = () => {
               },
             })}
           />
-          {errors.password && <p>{errors.password.message}</p>}
+          {errors.password && (
+            <p className="error-message">{errors.password.message}</p>
+          )}
         </div>
 
-        <button type="submit">Submit</button>
+        {error && <p className="error-message">{error}</p>}
+
+        <Link className="login-link" to="/login">
+          Login
+        </Link>
+        <button className="signup-button" type="submit">
+          Sign Up
+        </button>
       </form>
     </div>
   );

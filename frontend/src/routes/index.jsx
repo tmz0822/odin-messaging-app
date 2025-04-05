@@ -3,16 +3,17 @@ import Signup from '../pages/Signup';
 import Login from '../pages/Login';
 import Home from '../pages/Home';
 import App from '../App';
-import ProtectedRoute from './ProtectedRoute';
+import RequireAuth from './RequireAuth';
+import RedirectIfAuthenticated from './RedirectIfAuthenticated';
 import UserProfile from '../pages/UserProfile';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <ProtectedRoute>
+      <RequireAuth redirectTo="/login">
         <App />
-      </ProtectedRoute>
+      </RequireAuth>
     ),
     children: [
       {
@@ -27,11 +28,19 @@ const router = createBrowserRouter([
   },
   {
     path: '/signup',
-    element: <Signup />,
+    element: (
+      <RedirectIfAuthenticated>
+        <Signup />
+      </RedirectIfAuthenticated>
+    ),
   },
   {
     path: '/login',
-    element: <Login />,
+    element: (
+      <RedirectIfAuthenticated>
+        <Login />
+      </RedirectIfAuthenticated>
+    ),
   },
 ]);
 

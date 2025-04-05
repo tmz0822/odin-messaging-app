@@ -47,7 +47,19 @@ const login = async (credentials) => {
   }
 };
 
+const logout = async () => {
+  try {
+    await fetch(`${API_URL}/logout`, {
+      method: 'POST',
+      credentials: 'include',
+    });
+  } catch (error) {
+    console.error('Failed to logout: ', error);
+  }
+};
+
 export const authService = {
   login,
   signup,
+  logout,
 };

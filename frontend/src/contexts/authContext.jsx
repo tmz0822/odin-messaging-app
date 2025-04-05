@@ -13,7 +13,7 @@ const AuthProvider = ({ children }) => {
     const checkAuth = async () => {
       try {
         const data = await userService.fetchUser();
-        console.log(data.user);
+        console.log(data);
         setUser(data.user);
         setIsAuthenticated(true);
       } catch (error) {
@@ -23,14 +23,14 @@ const AuthProvider = ({ children }) => {
         setLoading(false);
       }
     };
-    console.log('Checking authentication...');
+
     checkAuth();
   }, []);
 
   const login = async (credentials) => {
     await authService.login(credentials);
-    const userData = await userService.fetchUser();
-    setUser(userData);
+    const data = await userService.fetchUser();
+    setUser(data.user);
     setIsAuthenticated(true);
   };
 

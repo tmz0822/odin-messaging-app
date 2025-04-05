@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import { API_URL } from '../config/api';
 
 const Header = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
 
   return (
     <header className="header">
@@ -26,6 +26,10 @@ const Header = () => {
             <span className="header-right__user-name">{user.username}</span>
           </div>
         </Link>
+
+        <button className="header-right__logout-btn" onClick={logout}>
+          Logout
+        </button>
       </div>
     </header>
   );

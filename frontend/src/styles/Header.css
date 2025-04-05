@@ -16,6 +16,7 @@
 .header-right {
   display: flex;
   align-items: center;
+  gap: 1rem;
 }
 
 .header-right__user-profile {
@@ -35,4 +36,10 @@
 .header-right__user-name {
   font-size: 1rem;
   font-weight: bold;
+}
+
+.header-right__logout-btn {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: #fff;
 }

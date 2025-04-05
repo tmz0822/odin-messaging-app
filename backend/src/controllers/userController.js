@@ -46,6 +46,8 @@ const updateProfile = async (req, res) => {
     const userId = req.user.id;
     const allowedFields = ['bio'];
 
+    console.log(req.body);
+
     const updates = Object.fromEntries(
       Object.entries(req.body).filter(([key]) => allowedFields.includes(key))
     );
