@@ -7,8 +7,18 @@
 3. Manage user profile
 
 ## UI
-
+Sign up page
 ![Sign up](./images/signup.jpg)
+
+Login page
+![Login](./images/login.jpg)
+
+Messages page
+![Messages](./images/messages.jpg)
+
+User profile page
+![User profile](./images/user_profile.jpg)
+
 
 ## Data model
 
