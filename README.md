@@ -8,7 +8,7 @@
 
 ## UI
 
-How it will looks like?
+![Sign up](./images/signup.jpg)
 
 ## Data model
 
